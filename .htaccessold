@@ -1,0 +1,24 @@
+ErrorDocument 403 https://www.tiqs.nl
+#order deny,allow
+#allow from 185.31.247.105
+#allow from 37.117.42.242
+#allow from 95.97.186.170
+#deny from all
+
+DirectoryIndex index.php
+RewriteEngine on
+RewriteBase /
+
+RewriteCond %{HTTP_HOST} ^(www.)?tiqs.com$
+RewriteCond %{REQUEST_URI} !^/start/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /my_subdir/$1
+RewriteCond %{HTTP_HOST} ^(www.)?tiqs.com$
+RewriteRule ^(/)?$ start/index.php [L] 
+
+RewriteCond $1 !^(index\.php|(.*)\.swf|forums)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ ./index.php?$1 [L,QSA]
+
